@@ -134,7 +134,7 @@ public class AdminRestController {
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
         try {
-            String subject = "New profile created in Aimodosia Website";
+            String subject = "New profile created in Blood Donation Website";
             String body = "A new user profile has been created for you by the admin. Your username is: " + user.getUsername() + " with email " + user.getEmail() + ".";
             emailService.sendEmail(user.getEmail(), subject, body);
         } catch (IOException e) {

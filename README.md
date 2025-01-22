@@ -1,5 +1,5 @@
 # Aimodosia Backend
-This is the backend of the web app Aimodosia in Java/SpringBoot.
+This is the backend of the web app Blood Donation in Java/SpringBoot.
 
 
 ## Docker Setup and run

@@ -27,9 +27,9 @@ public class AppConfig {
                         addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes
                         ("Bearer Authentication", createAPIKeyScheme()))
-                .info(new Info().title("DS PROJECT 2023 REST API")
-                        .description("This API is used in Aimodosia project")
-                        .version("1.0").contact(new Contact().name("Omada 19")
+                .info(new Info().title("CYBERSECURITY REST API")
+                        .description("This API is used in Blood Donation project")
+                        .version("1.0").contact(new Contact().name("Group")
                                 .email("it2021077@hua.gr").url(""))
                         .license(new License().name("License of API")
                                 .url("https://swagger.io/license/")));
