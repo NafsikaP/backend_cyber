@@ -112,7 +112,7 @@ public class InitialDataService {
     }
 
     private void createDonationRequest() {
-        donationRequestRepository.findByLocationAndDate("Athens", LocalDate.parse("2025-04-05")).orElseGet(() -> {
+        donationRequestRepository.findByLocationAndDate("Athens", LocalDate.parse("2025-02-15")).orElseGet(() -> {
             DonationRequest donationRequest = donationRequestRepository.save(new DonationRequest("Athens", LocalDate.parse("2025-04-05")));
             donationRequest.setSecretary(secretaryRepository.findByAFM("123456789").get());
             donationRequestService.saveDonationRequest(donationRequest);
@@ -134,7 +134,7 @@ public class InitialDataService {
         aimodotisRepository.findByAMKA("05110301111").orElseGet(() -> {
             Aimodotis aimodotis = aimodotisRepository.save(new Aimodotis("Nafsika", "Papaioannou", "naf.pap2003@gmail.com", "6985762160", "05110301111", 'F', LocalDate.parse("2024-01-11"), 20, "Athens"));
             AppForm appForm = appFormRepository.save(new AppForm(AppForm.Status.ACCEPTED,LocalDate.parse("2025-01-10")));
-            BloodTest bloodTest = bloodTestRepository.save(new BloodTest(LocalDate.parse("2022-11-25"), "White Blood Cell Count (WBC): 7.2 x10^3/µL\n Red Blood Cell Count (RBC): 5.0 x10^6/µL\n Hemoglobin (HGB): 15.5 g/dL\n Hematocrit (HCT): 45%\n Platelet Count: 250 x10^3/µL","0+"));
+            BloodTest bloodTest = bloodTestRepository.save(new BloodTest(LocalDate.parse("2025-01-30"), "White Blood Cell Count (WBC): 7.2 x10^3/µL\n Red Blood Cell Count (RBC): 5.0 x10^6/µL\n Hemoglobin (HGB): 15.5 g/dL\n Hematocrit (HCT): 45%\n Platelet Count: 250 x10^3/µL","0+"));
             appForm.setAimodotis(aimodotis);
             appForm.setBloodTest(bloodTest);
             appForm.setSecretary(secretaryRepository.findByAFM("123456789").get());
