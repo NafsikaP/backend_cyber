@@ -14,10 +14,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
@@ -30,7 +29,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManagerBean (AuthenticationConfiguration authConfig) throws Exception {
+    public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
 
@@ -45,10 +44,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(request -> corsConfiguration))
                 .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint(unauthorizedHandler))
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**","/actuator/health/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/actuator/health/**").permitAll()
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/v2/api-docs/**",
@@ -58,7 +56,18 @@ public class SecurityConfig {
                         .requestMatchers("/aimodotis/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // Add the Content-Security-Policy header here
+                .headers(headers -> headers
+                        .defaultsDisabled() // Disable default headers
+                        .cacheControl(cache -> cache.disable()) // Disable caching
+                        .contentTypeOptions(content -> content.disable()) // Disable X-Content-Type-Options
+                        .addHeaderWriter((request, response) -> response.setHeader(
+                                "Content-Security-Policy",
+                                "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; frame-ancestors 'self';"
+                        ))
+                );
+
 
         return http.build();
     }
